@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="https://cdn.swaptox.com/favicon.ico" type="image/x-icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+
+		<title>SwaptoX Connect Playground</title>
+		<style>
+			:root {
+				color-scheme: light;
+				font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+				background: #f5f7fb;
+				color: #172033;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				min-height: 100vh;
+				background:
+					radial-gradient(circle at 18% 12%, rgba(2, 191, 174, 0.14), transparent 32%),
+					linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%);
+			}
+
+			button,
+			select {
+				font: inherit;
+			}
+
+			button {
+				border: 0;
+				border-radius: 10px;
+				padding: 10px 14px;
+				cursor: pointer;
+				background: #172033;
+				color: #fff;
+				transition: transform 0.12s ease, opacity 0.12s ease;
+			}
+
+			button:hover {
+				opacity: 0.9;
+			}
+
+			button:active {
+				transform: scale(0.98);
+			}
+
+			button.secondary {
+				background: #e8edf5;
+				color: #172033;
+			}
+
+			button.warn {
+				background: #f45b3f;
+			}
+
+			select {
+				border: 1px solid #d8e0eb;
+				border-radius: 10px;
+				padding: 9px 12px;
+				background: #fff;
+				color: #172033;
+			}
+
+			.app {
+				width: min(1180px, calc(100vw - 32px));
+				margin: 0 auto;
+				padding: 36px 0;
+			}
+
+			.header {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto;
+				gap: 24px;
+				align-items: end;
+				margin-bottom: 24px;
+			}
+
+			.title {
+				margin: 0;
+				font-size: 34px;
+				line-height: 1.12;
+				letter-spacing: 0;
+			}
+
+			.subtitle {
+				margin: 10px 0 0;
+				color: #64748b;
+				line-height: 1.6;
+			}
+
+			.status {
+				min-width: 280px;
+				padding: 14px 16px;
+				border: 1px solid #d8e0eb;
+				border-radius: 12px;
+				background: rgba(255, 255, 255, 0.86);
+			}
+
+			.status-title {
+				font-size: 12px;
+				font-weight: 700;
+				color: #64748b;
+				text-transform: uppercase;
+			}
+
+			.status-value {
+				margin-top: 6px;
+				font-size: 14px;
+				line-height: 1.5;
+				word-break: break-word;
+			}
+
+			.grid {
+				display: grid;
+				grid-template-columns: 1.05fr 0.95fr;
+				gap: 18px;
+			}
+
+			.panel {
+				border: 1px solid #d8e0eb;
+				border-radius: 14px;
+				background: rgba(255, 255, 255, 0.92);
+				box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+				overflow: hidden;
+			}
+
+			.panel-header {
+				padding: 16px 18px;
+				border-bottom: 1px solid #e8edf5;
+				font-weight: 700;
+			}
+
+			.panel-body {
+				padding: 18px;
+			}
+
+			.controls {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.field-row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+				align-items: center;
+				margin-top: 14px;
+			}
+
+			.preview-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 10px;
+			}
+
+			.preview-grid img {
+				width: 100%;
+				aspect-ratio: 9 / 13;
+				object-fit: cover;
+				border-radius: 12px;
+				border: 1px solid #d8e0eb;
+				background: #fff;
+			}
+
+			.log {
+				height: 330px;
+				margin: 0;
+				padding: 14px;
+				overflow: auto;
+				border-radius: 10px;
+				background: #0f172a;
+				color: #dbeafe;
+				font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+				white-space: pre-wrap;
+			}
+
+			@media (max-width: 860px) {
+				.header,
+				.grid {
+					grid-template-columns: 1fr;
+				}
+
+				.status {
+					min-width: 0;
+				}
+			}
+
+			@media (max-width: 560px) {
+				.app {
+					width: min(100vw - 20px, 1180px);
+					padding: 20px 0;
+				}
+
+				.title {
+					font-size: 28px;
+				}
+
+				.preview-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="app">
+			<header class="header">
+				<div>
+					<h1 class="title">SwaptoX Connect Playground</h1>
+					<p class="subtitle">
+						Demo page for modal connect, auto connect, pre-transaction connection check, theme switching,
+						language switching, state inspection, and events.
+					</p>
+				</div>
+				<section class="status" aria-live="polite">
+					<div class="status-title">Current state</div>
+					<div id="status" class="status-value">Not connected</div>
+				</section>
+			</header>
+
+			<section class="grid-/">
+				<div class="panel">
+					<div class="panel-header">SDK Actions</div>
+					<div class="panel-body">
+						<div class="controls">
+							<button id="open">Open Modal</button>
+							<button id="autoConnect" class="secondary">Auto Connect</button>
+							<button id="checkConnect" class="secondary">Check Connect</button>
+							<button id="mockTx" class="secondary">Mock Transaction Check</button>
+							<button id="getState" class="secondary">Get State</button>
+							<button id="getProvider" class="secondary">Get Provider</button>
+							<button id="close" class="secondary">Close Modal</button>
+							<button id="disconnect" class="warn">Disconnect</button>
+						</div>
+
+						<div class="field-row">
+							<label for="theme">Theme</label>
+							<select id="theme">
+								<option value="light">Light</option>
+								<option value="dark">Dark</option>
+							</select>
+
+							<label for="lang">Language</label>
+							<select id="lang">
+								<option value="en">English</option>
+								<option value="zh-Hans">简体中文</option>
+								<option value="zh-Hant">繁體中文</option>
+								<option value="ja">日本語</option>
+								<option value="ko">한국어</option>
+							</select>
+						</div>
+
+						<div class="field-row">
+							<label for="chain">Current chain</label>
+							<select id="chain">
+								<option value="base">Base</option>
+								<option value="rootstock">Rootstock</option>
+							</select>
+							<button id="updateConfig" class="secondary">Update Config</button>
+						</div>
+					</div>
+				</div>
+<!--
+				<div class="panel">
+					<div class="panel-header">UI Preview</div>
+					<div class="panel-body">
+						<div class="preview-grid">
+							<img src="./demo/1.png" alt="SwaptoX Connect wallet list" />
+							<img src="./demo/2.png" alt="SwaptoX Connect QR view" />
+							<img src="./demo/3.png" alt="SwaptoX Connect dark theme" />
+						</div>
+					</div>
+				</div>-->
+			</section>
+
+			<section class="panel" style="margin-top: 18px;">
+				<div class="panel-header">Event Log</div>
+				<div class="panel-body">
+					<pre id="log" class="log"></pre>
+				</div>
+			</section>
+		</main>
+
+		<script type="module">
+			import { createConnect } from '../ui/src/index.ts';
+
+			const config = {
+				projectId: '19c224694c2b8c5e44f39cd795aa0837',
+				chains: ['base', 'rootstock'],
+				currentChain: 'base',
+				metadata: {
+					name: 'SwaptoX',
+					description: 'Swap Aggregator & DEX',
+					logo: 'https://cdn.swaptox.com/logo.png',
+					url: 'https://app.swaptox.com',
+				},
+				rpcMap: {},
+			};
+
+			const connect = createConnect(config, {
+				theme: 'light',
+				lang: 'en',
+			});
+
+			const logEl = document.getElementById('log');
+			const statusEl = document.getElementById('status');
+			const chainEl = document.getElementById('chain');
+			const themeEl = document.getElementById('theme');
+			const langEl = document.getElementById('lang');
+
+			function shortAccount(account) {
+				if (!account) return '';
+				return `${account.slice(0, 6)}...${account.slice(-4)}`;
+			}
+
+			function print(title, data) {
+				const time = new Date().toLocaleTimeString();
+				const body = data === undefined ? '' : `\n${JSON.stringify(data, replacer, 2)}`;
+				logEl.textContent = `[${time}] ${title}${body}\n\n${logEl.textContent}`;
+				updateStatus();
+			}
+
+			function replacer(_key, value) {
+				if (typeof value === 'function') return '[Function]';
+				if (value instanceof Error) {
+					return { name: value.name, message: value.message, code: value.code };
+				}
+				return value;
+			}
+
+			function updateStatus() {
+				const state = connect.getState();
+				const account = state.accounts?.[0];
+				statusEl.textContent = state.connected
+					? `Connected: ${shortAccount(account)} on chain ${state.chainId}`
+					: `Not connected. Target chain: ${state.chainId}`;
+			}
+
+			async function run(title, task) {
+				try {
+					const result = await task();
+					print(title, result ?? 'ok');
+					return result;
+				} catch (error) {
+					print(`${title} failed`, error);
+					throw error;
+				}
+			}
+
+			connect.on('connect', event => print('connect', event));
+			connect.on('disconnect', event => print('disconnect', event));
+			connect.on('accountsChanged', event => print('accountsChanged', event));
+			connect.on('chainChanged', event => print('chainChanged', event));
+			connect.on('display_uri', event => print('display_uri', event));
+
+			document.getElementById('open').onclick = () => connect.open();
+			document.getElementById('close').onclick = () => connect.close();
+			document.getElementById('autoConnect').onclick = () => run('autoConnect', () => connect.autoConnect());
+			document.getElementById('checkConnect').onclick = () => run('checkConnect', () => connect.checkConnect());
+			document.getElementById('mockTx').onclick = () => run('mock transaction preflight', () => connect.checkConnect());
+			document.getElementById('getState').onclick = () => print('getState', connect.getState());
+			document.getElementById('getProvider').onclick = () => print('getProvider', Boolean(connect.getProvider()));
+			document.getElementById('disconnect').onclick = () => run('disconnect', () => connect.disconnect());
+
+			document.getElementById('updateConfig').onclick = () => {
+				config.currentChain = chainEl.value;
+				connect.updateConfig({ currentChain: chainEl.value });
+				print('updateConfig', { currentChain: chainEl.value });
+			};
+
+			themeEl.onchange = () => print('setTheme', { theme: themeEl.value, ok: connect.setTheme(themeEl.value) });
+			langEl.onchange = () => print('setLang', { lang: langEl.value, ok: connect.setLang(langEl.value) });
+
+			await run('initial autoConnect', () => connect.autoConnect());
+			updateStatus();
+		</script>
+	</body>
+</html>

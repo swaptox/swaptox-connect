@@ -1,0 +1,23 @@
+{
+  "name": "swaptox-connect",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wallet connection SDK for SwaptoX, including core logic, Lit UI components, and a playground.",
+  "scripts": {
+    "build": "pnpm --filter @swaptox/connect-core build && pnpm --filter @swaptox/connect-ui build",
+    "dev": "pnpm --filter playground dev",
+    "typecheck": "pnpm --filter @swaptox/connect-core typecheck && pnpm --filter @swaptox/connect-ui typecheck"
+  },
+  "keywords": [
+    "wallet",
+    "walletconnect",
+    "web3",
+    "sdk"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "typescript": "6.0.3"
+  }
+}

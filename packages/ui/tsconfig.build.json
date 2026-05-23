@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist",
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"paths": {
+			"@swaptox/connect-core": ["../core/dist/index.d.ts"]
+		}
+	},
+	"include": ["src/**/*"]
+}

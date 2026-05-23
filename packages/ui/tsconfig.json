@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"experimentalDecorators": true,
+		"useDefineForClassFields": false,
+		"paths": {
+			"@swaptox/connect-core": ["../core/src/index.ts"]
+		}
+	},
+	"include": ["src/**/*"]
+}

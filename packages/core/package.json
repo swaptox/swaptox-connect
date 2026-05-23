@@ -1,0 +1,45 @@
+{
+	"name": "@swaptox/connect-core",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "Core wallet connection logic for SwaptoX Connect.",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsup ./src/index.ts --dts --format esm --clean --external viem --external @walletconnect/ethereum-provider --external @coinbase/wallet-sdk --external qr-code-styling --no-config",
+		"dev": "tsup ./src/index.ts --dts --format esm --watch --external viem --external @walletconnect/ethereum-provider --external @coinbase/wallet-sdk --external qr-code-styling --no-config",
+		"typecheck": "tsc --noEmit --skipLibCheck"
+	},
+	"files": [
+		"dist"
+	],
+	"keywords": [
+		"wallet",
+		"walletconnect",
+		"web3",
+		"sdk"
+	],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.33.0",
+	"devDependencies": {
+		"tsup": "8.5.1",
+		"typescript": "6.0.3"
+	},
+	"dependencies": {
+		"mitt": "3.0.1"
+	},
+	"peerDependencies": {
+		"@coinbase/wallet-sdk": "^4.3.7",
+		"@walletconnect/ethereum-provider": "^2.23.9",
+		"qr-code-styling": "1.9.2",
+		"viem": "^2.48.4"
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"name": "playground",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite --port 3100"
+	},
+	"dependencies": {
+		"@swaptox/connect-ui": "workspace:*"
+	},
+	"devDependencies": {
+		"vite": "8.0.10"
+	}
+}

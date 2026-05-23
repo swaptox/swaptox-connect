@@ -1,0 +1,40 @@
+{
+  "name": "@swaptox/connect-ui",
+  "version": "1.0.0",
+  "description": "Lit UI package for SwaptoX Connect.",
+  "type": "module",
+  "main": "dist/connect-ui.js",
+  "module": "dist/connect-ui.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/connect-ui.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --project tsconfig.build.json --skipLibCheck",
+    "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "wallet",
+    "walletconnect",
+    "web3",
+    "lit"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@swaptox/connect-core": "workspace:*",
+    "lit": "3.3.2"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vite": "8.0.10"
+  }
+}
