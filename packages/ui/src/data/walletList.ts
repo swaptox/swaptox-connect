@@ -14,7 +14,7 @@ export const customWallet = [
 		type: 'injected',
 		name: 'Injected',
 		subtitle: 'installed',
-		logo: 'https://cdn.swaptox.com/assets/wallet/app.svg',
+		logo: 'https://cdn.swaptox.com/assets/wallet/apps.svg',
 		border: 'var(--stxconnect-logo-border1)',
 	},
 	/* {

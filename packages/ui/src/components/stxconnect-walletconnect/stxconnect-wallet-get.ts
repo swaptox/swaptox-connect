@@ -133,7 +133,7 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 			align-items: center;
 			justify-content: center;
 			border-radius: 12px;
-			background-color: rgba(2, 182, 166, .06);
+			background-color: #fff;
 			box-shadow: 0 0 0 1px rgba(2, 182, 166, .2);
 			transform:scale(0.88);
 			transform-origin: center center;
@@ -228,8 +228,9 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 		
 		return html`
 			<div style="position: relative;">
-				<div class="browser-card-body ${className}" style="opacity:1;">
-				</div>
+				<div class="browser-card-body ${className}" 
+					style="opacity:1;filter:var(--stxconnect-browser-card-filter);"
+				></div>
 				
 				<div class="browser-card-body stxc-flex-row-center-center" 
 				style="position: absolute;inset: 0;z-index: 1;">
@@ -239,7 +240,7 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 						${browserLogo}
 						
 						<div style="display: flex;flex-direction: column;row-gap: 10px;">
-							<div class="font-sans" 
+							<div class="font-sans stxc-theme-font-color" 
 							style="font-size: 16px; white-space: normal;"
 							>${formatText($t['add-to-browser'], { name: this.name, browser: browserName })}</div>
 							<div class="font-sans" style="font-size: 14px; color: #999; white-space: normal;"
@@ -268,7 +269,7 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 			<div class="app-item-element" 
 				@click=${() => this._openExtensions(postUrl)}
 			>
-				<svg t="1779457341355" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16888" width="40" height="40"><path d="M758.4 67.2H265.6C156.8 67.2 64 156.8 64 268.8v492.8c0 112 89.6 201.6 201.6 201.6h492.8c112 0 201.6-89.6 201.6-201.6V268.8c0-112-89.6-201.6-201.6-201.6zM345.6 736l-19.2 32c-6.4 12.8-22.4 22.4-38.4 22.4-6.4 0-16-3.2-22.4-6.4-22.4-12.8-28.8-38.4-16-60.8l16-28.8c3.2-6.4 9.6-9.6 16-12.8 12.8-3.2 25.6-3.2 41.6 3.2 12.8 6.4 19.2 12.8 22.4 22.4 6.4 12.8 3.2 22.4 0 28.8z m246.4-64c-3.2 3.2-6.4 3.2-9.6 3.2H246.4c-22.4 0-41.6-16-44.8-35.2-3.2-28.8 16-51.2 44.8-51.2h86.4l131.2-227.2-32-57.6c-16-22.4-6.4-48 12.8-60.8 6.4-3.2 16-6.4 22.4-6.4 16 0 28.8 6.4 38.4 22.4l6.4 12.8 6.4-12.8c9.6-12.8 22.4-22.4 38.4-22.4 12.8 0 25.6 6.4 35.2 19.2 9.6 16 9.6 35.2 0 51.2l-22.4 35.2-9.6 16L512 448l-6.4 12.8-73.6 128h99.2c19.2 0 38.4 6.4 54.4 19.2 25.6 22.4 19.2 48 6.4 64z m188.8 3.2h-35.2l28.8 48c12.8 22.4 6.4 48-16 60.8-6.4 3.2-16 6.4-22.4 6.4-16 0-28.8-6.4-38.4-22.4l-48-83.2-6.4-9.6-51.2-86.4-12.8-22.4-25.6-41.6c-16-25.6-22.4-57.6-12.8-86.4 3.2-16 12.8-32 28.8-44.8 3.2-3.2 6.4 0 9.6 3.2l112 195.2h83.2c22.4 0 41.6 16 44.8 35.2 9.6 25.6-9.6 48-38.4 48z" fill="#009CF5" p-id="16889"></path></svg>
+				<svg t="1779611269044" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6508" width="42" height="42"><path d="M740.36 928.29H285.54c-103.27 0-186.96-83.68-186.96-186.96V286.52c0-103.27 83.69-186.96 186.96-186.96h454.82c103.27 0 186.96 83.69 186.96 186.96v454.82c0 103.27-83.69 186.95-186.96 186.95z m0 0" fill="#009CF5" p-id="6509"></path><path d="M528.48 582.31H437.5L506 464.09l6.95-12.05 46.94-80.67 9.04-15.76 19.47-33.38c8.58-14.6 8.81-33.38-0.93-47.17-8.34-11.82-20.28-16.58-32.1-16.58-13.91 0-27.47 7.18-35.12 20.17l-6.95 12.29-7.19-12.29c-7.65-12.98-21.33-20.17-35.12-20.17-6.96 0-13.91 1.62-20.4 5.33-19.24 11.12-25.85 36.04-14.6 55.29l30.25 52.28-122.39 211.16h-79.51c-24.34 0.23-43.81 21.79-39.99 47.18 3.01 19.94 21.67 33.84 41.84 33.84h30.72l93.65-0.23h186.96c3.48 0 6.96-1.51 9.04-4.29 10.66-14.26 18.54-36.39-7.53-59.23-13.8-12.17-32.23-17.5-50.55-17.5z m0 0" fill="#ffffff" p-id="6510" data-spm-anchor-id="a313x.manage_type_myprojects.0.i0.d3e23a81QY6esU" class="selected"></path><path d="M759.83 582.08h-77.89l-104.2-179.77c-1.85-3.13-6.03-4.17-8.92-2.09-14.6 10.55-23.18 25.27-27.59 41.5-7.42 27.36-1.28 56.68 12.87 81.25l22.37 38.83 11.82 20.63 46.94 80.9 4.87 8.11 45.09 77.89c7.65 12.98 21.1 20.17 34.89 20.17 6.95 0 14.14-1.85 20.63-5.56 19.24-11.13 25.85-35.81 14.6-55.29L729 663.1h32.8c24.34 0 43.7-22.02 39.75-47.4-3.24-19.83-21.67-33.62-41.72-33.62z m-421.67 91.8c-14.26-5.79-27.7-5.1-38.48-2.09-5.91 1.62-10.78 5.68-13.79 10.9l-15.06 25.73c-11.36 19.47-4.64 44.16 14.6 55.29 6.49 3.7 13.68 5.56 20.63 5.56 13.91 0 27.24-7.19 34.66-20.17l17.16-29.55c4.17-7.3 4.98-16.11 1.85-23.88-3.48-8.69-9.97-17.04-21.57-21.79z m0 0" fill="#ffffff" p-id="6511" data-spm-anchor-id="a313x.manage_type_myprojects.0.i1.d3e23a81QY6esU" class="selected"></path></svg>
 				
 				<div class="font-sans stxc-theme-font-color" 
 				style="font-size: 15px;line-height: 22px;"

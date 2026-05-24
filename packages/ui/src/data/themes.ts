@@ -41,6 +41,8 @@ export const themePack = {
 		'--stxconnect-logo-border4': '#b5f1ff',
 		'--stxconnect-logo-border5': '#e5e',
 		'--stxconnect-logo-border6': '#b5f1ff',
+		
+		'--stxconnect-browser-card-filter': 'invert(0%)',
 	},
 	'dark': {
 		'--stxconnect-font-family': "'Inter', sans-serif",
@@ -79,6 +81,8 @@ export const themePack = {
 		'--stxconnect-logo-border4': '#00000000',
 		'--stxconnect-logo-border5': '#a400a4',
 		'--stxconnect-logo-border6': '#234682',
+		
+		'--stxconnect-browser-card-filter': 'invert(76%)',
 	},
 };
 

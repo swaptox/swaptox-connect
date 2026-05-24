@@ -323,6 +323,7 @@
 			}
 
 			function print(title, data) {
+				console.log(title, data);
 				const time = new Date().toLocaleTimeString();
 				const body = data === undefined ? '' : `\n${JSON.stringify(data, replacer, 2)}`;
 				logEl.textContent = `[${time}] ${title}${body}\n\n${logEl.textContent}`;
