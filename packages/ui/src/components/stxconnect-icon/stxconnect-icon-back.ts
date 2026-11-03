@@ -38,6 +38,7 @@ export class StxconnectIconBack extends LitElement {
 			align-items: center;
 			justify-content: center;
 			box-shadow: 0 0 0 1px #ffffff00;
+			fill: var(--stxconnect-font-color, #111);
 		}
 		.stxconnect-icon-back[size=default]{
 			border-radius: 9px;
@@ -53,7 +54,14 @@ export class StxconnectIconBack extends LitElement {
 			box-shadow: 0 0 0 2px var(--stxconnect-box-shadow-color, #02b6a680);
 			background-color: #02b6a60d;
 			color: #00a99a;
+			fill: #00a99a;
 		}
+		
+		
+		.icon-back-css{
+			fill: inherit;
+		}
+		
 		
     `;
 	}
@@ -61,7 +69,7 @@ export class StxconnectIconBack extends LitElement {
 	render() {
 		return html`
 		<div class="stxconnect-icon-back" @click=${this._tapIcon} size="${this.size}">
-			<svg t="1779432183745" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5902" width="16" height="16"><path d="M710.33173334 885.4016a51.2 51.2 0 0 1-72.3968 72.3968l-409.6-409.6a51.2 51.2 0 0 1 0-72.3968l409.6-409.6a51.2 51.2 0 0 1 72.3968 72.3968L336.93013334 512l373.4016 373.4016z" fill="var(--stxconnect-font-color, #111)" p-id="5903"></path></svg>
+			<svg t="1779432183745" class="icon-back-css" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5902" width="16" height="16"><path d="M710.33173334 885.4016a51.2 51.2 0 0 1-72.3968 72.3968l-409.6-409.6a51.2 51.2 0 0 1 0-72.3968l409.6-409.6a51.2 51.2 0 0 1 72.3968 72.3968L336.93013334 512l373.4016 373.4016z" p-id="5903"></path></svg>
 		</div>
     `;
 	}

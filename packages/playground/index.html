@@ -323,20 +323,160 @@
 			}
 
 			function print(title, data) {
-				console.log(title, data);
+				const MAX_DEPTH = 6;
+				const MAX_ITEMS = 50;
+				const MAX_NODES = 1000;
+				const MAX_STRING_LENGTH = 3000;
+				const MAX_ENTRY_LENGTH = 12000;
+				const MAX_LOG_LENGTH = 50000;
+				const seen = new WeakMap();
+				const state = { nodes: 0 };
+
+				function errorMessage(error) {
+					try {
+						return String(error);
+					} catch {
+						return 'unknown error';
+					}
+				}
+
+				function toPrintable(value, depth = 0, path = '$') {
+					try {
+						if (state.nodes >= MAX_NODES) return '[Maximum printable item count reached]';
+						state.nodes += 1;
+						if (value === null || typeof value === 'boolean') return value;
+						if (typeof value === 'string') {
+							return value.length > MAX_STRING_LENGTH
+								? `${value.slice(0, MAX_STRING_LENGTH)}… [string truncated]`
+								: value;
+						}
+						if (typeof value === 'number') {
+							return Number.isFinite(value) ? value : String(value);
+						}
+						if (typeof value === 'bigint') return `${value.toString()}n`;
+						if (typeof value === 'undefined') return '[undefined]';
+						if (typeof value === 'symbol') return String(value);
+						if (typeof value === 'function') return `[Function${value.name ? `: ${value.name}` : ''}]`;
+						if (typeof value !== 'object') return String(value);
+
+						if (seen.has(value)) return `[Circular or repeated reference to ${seen.get(value)}]`;
+						seen.set(value, path);
+
+						if (depth >= MAX_DEPTH) {
+							return Array.isArray(value) ? `[Array(${value.length}) omitted: max depth]` : '[Object omitted: max depth]';
+						}
+						if (value instanceof Error) {
+							const error = {
+								name: value.name,
+								message: value.message,
+							};
+							if (value.code !== undefined) error.code = toPrintable(value.code, depth + 1, `${path}.code`);
+							if (value.stack) error.stack = toPrintable(value.stack, depth + 1, `${path}.stack`);
+							return error;
+						}
+						if (value instanceof Date) return Number.isNaN(value.getTime()) ? '[Invalid Date]' : value.toISOString();
+						if (value instanceof RegExp) return String(value);
+						if (value instanceof Map) {
+							const entries = [];
+							let index = 0;
+							for (const [key, item] of value) {
+								if (index >= MAX_ITEMS) break;
+								entries.push([
+									toPrintable(key, depth + 1, `${path}.<key:${index}>`),
+									toPrintable(item, depth + 1, `${path}.<value:${index}>`),
+								]);
+								index += 1;
+							}
+							if (value.size > MAX_ITEMS) entries.push(`[${value.size - MAX_ITEMS} more Map entries]`);
+							return { '[Map]': entries };
+						}
+						if (value instanceof Set) {
+							const items = [];
+							let index = 0;
+							for (const item of value) {
+								if (index >= MAX_ITEMS) break;
+								items.push(toPrintable(item, depth + 1, `${path}.<${index}>`));
+								index += 1;
+							}
+							if (value.size > MAX_ITEMS) items.push(`[${value.size - MAX_ITEMS} more Set items]`);
+							return { '[Set]': items };
+						}
+						if (ArrayBuffer.isView(value)) {
+							if (value instanceof DataView) return `[DataView: ${value.byteLength} bytes]`;
+							const items = [];
+							const length = Math.min(value.length, MAX_ITEMS);
+							for (let index = 0; index < length; index += 1) {
+								items.push(toPrintable(value[index], depth + 1, `${path}[${index}]`));
+							}
+							if (value.length > MAX_ITEMS) items.push(`[${value.length - MAX_ITEMS} more items]`);
+							return items;
+						}
+						if (Array.isArray(value)) {
+							const items = [];
+							const length = Math.min(value.length, MAX_ITEMS);
+							for (let index = 0; index < length; index += 1) {
+								try {
+									items.push(toPrintable(value[index], depth + 1, `${path}[${index}]`));
+								} catch (error) {
+									items.push(`[Unable to read item: ${errorMessage(error)}]`);
+								}
+							}
+							if (value.length > MAX_ITEMS) items.push(`[${value.length - MAX_ITEMS} more items]`);
+							return items;
+						}
+
+						const result = Object.create(null);
+						let count = 0;
+						for (const key in value) {
+							if (!Object.prototype.hasOwnProperty.call(value, key)) continue;
+							if (count >= MAX_ITEMS) {
+								result['…'] = '[More properties omitted]';
+								break;
+							}
+							const printableKey = key.length > 100 ? `${key.slice(0, 100)}…` : key;
+							try {
+								result[printableKey] = toPrintable(value[key], depth + 1, `${path}.${printableKey}`);
+							} catch (error) {
+								result[printableKey] = `[Unable to read property: ${errorMessage(error)}]`;
+							}
+							count += 1;
+						}
+						return result;
+					} catch (error) {
+						return `[Unable to format value: ${errorMessage(error)}]`;
+					}
+				}
+
+				let body = '';
+				let printableData = data;
+				if (data !== undefined) {
+					try {
+						printableData = toPrintable(data);
+						const serialized = JSON.stringify(printableData, null, 2);
+						let entryTruncated = false;
+						if (serialized.length > MAX_ENTRY_LENGTH) {
+							printableData = `${serialized.slice(0, MAX_ENTRY_LENGTH)}\n… [log entry truncated]`;
+							entryTruncated = true;
+						}
+						body = `\n${entryTruncated ? printableData : serialized}`;
+					} catch (error) {
+						printableData = `[Unable to print data: ${errorMessage(error)}]`;
+						body = `\n${printableData}`;
+					}
+				}
+
 				const time = new Date().toLocaleTimeString();
-				const body = data === undefined ? '' : `\n${JSON.stringify(data, replacer, 2)}`;
-				logEl.textContent = `[${time}] ${title}${body}\n\n${logEl.textContent}`;
+				const entry = `[${time}] ${title}${body}\n\n`;
+				logEl.textContent = `${entry}${logEl.textContent}`.slice(0, MAX_LOG_LENGTH);
+				try {
+					console.log(title, printableData);
+				} catch (error) {
+					console.warn('Unable to log data to console:', error);
+				}
 				updateStatus();
 			}
 
-			function replacer(_key, value) {
-				if (typeof value === 'function') return '[Function]';
-				if (value instanceof Error) {
-					return { name: value.name, message: value.message, code: value.code };
-				}
-				return value;
-			}
+
 
 			function updateStatus() {
 				const state = connect.getState();
@@ -372,6 +512,14 @@
 			document.getElementById('getProvider').onclick = () => print('getProvider', Boolean(connect.getProvider()));
 			document.getElementById('disconnect').onclick = () => run('disconnect', () => connect.disconnect());
 
+			
+			
+			document.getElementById('autoConnect').onclick = async () => {
+				console.log('autoConnect', await connect.autoConnect());
+			};
+			
+			
+			
 			document.getElementById('updateConfig').onclick = () => {
 				config.currentChain = chainEl.value;
 				connect.updateConfig({ currentChain: chainEl.value });

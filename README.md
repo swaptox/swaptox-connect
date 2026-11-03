@@ -1,5 +1,9 @@
 # SwaptoX Connect
 
+## docs(文档)
+
+- https://docs.swaptox.com
+
 SwaptoX Connect is a wallet connection SDK for EVM applications. It contains:
 
 - `@swaptox/connect-core`: wallet connection, WalletConnect, chain switching, auto connect, and pre-transaction connection checks.
@@ -135,13 +139,13 @@ await wallet.wcProviderQr({
 
 ## Native Browser Usage
 
-For plain HTML, use ESM from a CDN after the packages are published:
+For plain HTML, use via CDN:
 
 ```html
 <button id="connect">Connect Wallet</button>
 
 <script type="module">
-  import { createConnect } from 'https://esm.sh/@swaptox/connect-ui@1';
+  import { createConnect } from 'https://esm.sh/@swaptox/connect-ui';
 
   const connect = createConnect({
     projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
@@ -245,13 +249,13 @@ const connection = await connect.checkConnect();
 
 ### 原生 HTML 使用
 
-发布到 npm 后可以通过 CDN 使用：
+通过 CDN 使用：
 
 ```html
 <button id="connect">Connect Wallet</button>
 
 <script type="module">
-  import { createConnect } from 'https://esm.sh/@swaptox/connect-ui@1';
+  import { createConnect } from 'https://esm.sh/@swaptox/connect-ui';
 
   const connect = createConnect({
     projectId: '你的 WalletConnect Project ID',

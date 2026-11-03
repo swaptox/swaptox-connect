@@ -27,6 +27,7 @@ export const themePack = {
 		
 		
 		'--stxconnect-last-used-bg': '#effcea',
+		'--stxconnect-last-used-text': '#169810',
 		
 		'--stxconnect-card-bg': '#fff',
 		'--stxconnect-content-bg': '#f7f8f9',
@@ -43,6 +44,12 @@ export const themePack = {
 		'--stxconnect-logo-border6': '#b5f1ff',
 		
 		'--stxconnect-browser-card-filter': 'invert(0%)',
+		
+		'--stxconnect-button-plain-default-bg': '#eaeaea4d',
+		'--stxconnect-button-plain-default-text': '#444',
+		'--stxconnect-button-plain-default-border-color': '#d9d9d9',
+		
+		
 	},
 	'dark': {
 		'--stxconnect-font-family': "'Inter', sans-serif",
@@ -59,14 +66,15 @@ export const themePack = {
 		
 		
 		'--stxconnect-qr-bg-color': '#313131',
-		'--stxconnect-qr-detail-color': '#fff',
+		'--stxconnect-qr-detail-color': '#f6faff',
 		
 		
 		'--stxconnect-qr-loading-color': '#87878726',
 		'--stxconnect-qr-loading-drop-color': 'rgba(255, 255, 255, 0.2)',
 		'--stxconnect-qr-loading-dots-color': '#565656',
 		
-		'--stxconnect-last-used-bg': '#22484e61',
+		'--stxconnect-last-used-bg': '#22484e',
+		'--stxconnect-last-used-text': '#0bff00',
 		
 		'--stxconnect-card-bg': '#252525',
 		'--stxconnect-content-bg': '#252525',
@@ -82,7 +90,14 @@ export const themePack = {
 		'--stxconnect-logo-border5': '#a400a4',
 		'--stxconnect-logo-border6': '#234682',
 		
-		'--stxconnect-browser-card-filter': 'invert(76%)',
+		'--stxconnect-browser-card-filter': 'invert(80%)',
+		
+		
+		'--stxconnect-button-plain-default-bg': '#ffffff1f',
+		'--stxconnect-button-plain-default-text': '#f5f5f5',
+		'--stxconnect-button-plain-default-border-color': '#5a5a5a',
+		
+		
 	},
 };
 

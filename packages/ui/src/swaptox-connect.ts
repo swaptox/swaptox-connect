@@ -124,6 +124,19 @@ export class SwaptoXConnect extends LitElement {
 			right: 15px;
 			z-index: 500;
 		}
+		@media (max-width: 520px) {
+			.container {
+				height: 440px;
+			}
+		}
+		@media (max-height: 500px) {
+			.container {
+				height: 100vh;
+				max-height: 100vh;
+			}
+		}
+		
+		
 	`;
 
 	private _selectDefaultWallet() {
@@ -227,7 +240,7 @@ export class SwaptoXConnect extends LitElement {
 		const hasInjectedWallets = this.localWallets.length > 0;
 
 		return html`
-			<stxconnect-modal @mask=${this._handleClose} ?open=${this.open}>
+			<stxconnect-modal @close=${this._handleClose} @mask=${this._handleClose} ?open=${this.open}>
 				<div class="container">
 					<stxconnect-nav
 						?injected=${hasInjectedWallets}
@@ -302,3 +315,25 @@ declare global {
 if (typeof customElements !== 'undefined' && !customElements.get('swaptox-connect')) {
 	customElements.define('swaptox-connect', SwaptoXConnect);
 }
+
+
+
+/*
+
+请在 PowerShell 里运行：
+npm login --auth-type=web --registry=https://registry.npmjs.org/
+npm 会显示登录链接；按提示回车打开浏览器，完成授权后回到终端。你已经在浏览器登录的话，通常可以直接继续授权；如果没自动打开，就复制终端给出的链接到浏览器。npm 官方文档说明了这个 CLI 浏览器登录流程。npm 登录文档
+
+登录后验证终端拿到了凭据：
+npm whoami --registry=https://registry.npmjs.org/
+
+
+先分别预览将要发布的包：
+pnpm --filter "@swaptox/connect-core" publish --access public --no-git-checks --dry-run
+pnpm --filter "@swaptox/connect-ui" publish --access public --no-git-checks --dry-run
+确认预览内容无误后，按 core → UI 的顺序发布：
+pnpm --filter "@swaptox/connect-core" publish --access public --no-git-checks
+pnpm --filter "@swaptox/connect-ui" publish --access public --no-git-checks
+
+*/
+

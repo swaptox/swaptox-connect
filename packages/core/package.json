@@ -1,6 +1,6 @@
 {
 	"name": "@swaptox/connect-core",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"type": "module",
 	"description": "Core wallet connection logic for SwaptoX Connect.",
 	"main": "dist/index.js",
@@ -34,12 +34,12 @@
 		"typescript": "6.0.3"
 	},
 	"dependencies": {
-		"mitt": "3.0.1"
+		
 	},
 	"peerDependencies": {
-		"@coinbase/wallet-sdk": "^4.3.7",
-		"@walletconnect/ethereum-provider": "^2.23.9",
+		"@coinbase/wallet-sdk": "4.3.7",
+		"@walletconnect/ethereum-provider": "2.23.9",
 		"qr-code-styling": "1.9.2",
-		"viem": "^2.48.4"
+		"viem": "2.48.4"
 	}
 }

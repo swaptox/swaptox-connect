@@ -5,6 +5,7 @@ import { walletMap } from '../../data/walletList';
 import { detectBrowser } from '../../js_sdk/detectBrowser';
 import { sdkStore } from '../../store/store';
 import { StoreMixin } from '../../store/state-mixin';
+import { wcSdk } from '../../js_sdk/wcSdk';
 
 function formatText(template = '', values: Record<string, string>) {
 	return template.replace(/\{(\w+)\}/g, (_, key: string) => values[key] ?? '');
@@ -32,6 +33,7 @@ function getHomepageUrl(key: string): string|null {
 function capitalize(str: string) {
 	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
+
 
 export class StxconnectWalletGet extends StoreMixin(LitElement) {
 	
@@ -104,7 +106,30 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 				box-shadow .2s cubic-bezier(.4, 0, .2, 1),
 				background-color .2s cubic-bezier(.4, 0, .2, 1),
 				transform .2s cubic-bezier(.4, 0, .2, 1);
+			-webkit-tap-highlight-color: transparent;
 		}
+		
+		
+		
+		.font-size-16{
+			font-size: 16px;
+		}
+		.font-size-14{
+			font-size: 14px;
+		}
+		@media (max-width: 520px) {
+			.app-item-element {
+				padding: 2px 10px;
+			}
+			.font-size-16{
+				font-size: 15px;
+			}
+			.font-size-14{
+				font-size: 13px;
+			}
+		}
+		
+		
 		.app-item-element:hover {
 			box-shadow: 0 0 0 1px rgba(2, 182, 166, .5);
 			background-color: rgba(2, 182, 166, .1);
@@ -185,6 +210,7 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 	
 	
 	renderBrowserCard() {
+		if(wcSdk.isMobile()){return null;}
 		let postUrl = getWalletUrl(this.id, this.browser);
 		if(!postUrl){postUrl = getWalletUrl(this.id, 'chrome');}
 		if(!postUrl){return null;}
@@ -233,17 +259,17 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 				></div>
 				
 				<div class="browser-card-body stxc-flex-row-center-center" 
-				style="position: absolute;inset: 0;z-index: 1;">
+				style="position: absolute;inset: 0;z-index: 1;left: 12px;right: 12px;">
 					
 					<div style="display: flex;flex-direction: row;align-items: center;width: 320px;column-gap: 15px;">
 						
 						${browserLogo}
 						
 						<div style="display: flex;flex-direction: column;row-gap: 10px;">
-							<div class="font-sans stxc-theme-font-color" 
-							style="font-size: 16px; white-space: normal;"
+							<div class="font-sans stxc-theme-font-color font-size-16" 
+							style="white-space: normal;"
 							>${formatText($t['add-to-browser'], { name: this.name, browser: browserName })}</div>
-							<div class="font-sans" style="font-size: 14px; color: #999; white-space: normal;"
+							<div class="font-sans font-size-14" style="color: #999; white-space: normal;"
 							>${$t['add-wallet-extension']}</div>
 							<div>
 								<stxconnect-button @change=${() => this._openExtensions(postUrl)}
@@ -330,7 +356,7 @@ export class StxconnectWalletGet extends StoreMixin(LitElement) {
 			<div class="stxconnect-wallet-get-body">
 				<div class="stxc-flex-row-center-center">
 					<span class="font-sans stxc-theme-font-color" 
-					style="font-size: 20px;line-height: 58px;"
+					style="font-size: 18px;line-height: 58px;"
 					>${title}</span>
 				</div>
 				<div style="height: calc(100% - 58px);">

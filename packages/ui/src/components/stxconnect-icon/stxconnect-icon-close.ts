@@ -40,6 +40,7 @@ export class StxconnectIconClose extends LitElement {
 			color: var(--stxconnect-font-color, #111);
 			fill: var(--stxconnect-font-color, #111);
 			box-shadow: 0 0 0 1px var(--stxconnect-border-color, #ececec);
+			background-color: var(--stxconnect-theme-bg, #fff);
 		}
 		.stxconnect-icon-close[size=default]{
 			border-radius: 9px;

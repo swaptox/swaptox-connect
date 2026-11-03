@@ -201,7 +201,7 @@ export class StxconnectInjected extends StoreMixin(LitElement) {
 							border-radius: 122px;
 							padding: 0 8px;
 							box-shadow: 0 0 0 1px #169810;
-							color: #169810;
+							color: var(--stxconnect-last-used-text);
 							font-size: 11px;
 							white-space: nowrap;
 							line-height: 20px;
@@ -221,7 +221,7 @@ export class StxconnectInjected extends StoreMixin(LitElement) {
 	render() {
 		return html`
 			<div class="header-title-body">
-				<span class="font-sans stxc-theme-font-color" style="font-size: 20px;line-height: 58px;"
+				<span class="font-sans stxc-theme-font-color" style="font-size: 18px;line-height: 58px;"
 				>Injected</span>
 			</div>
 			<div style="padding: 0 16px;height: calc(100% - 116px);">

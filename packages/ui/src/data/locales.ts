@@ -1,4 +1,14 @@
-export const supported = ['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko'] as const;
+export const supported = [
+	'en', 
+	'zh-Hans', 
+	'zh-Hant', 
+	'ja', 
+	'ko', 
+	'th',
+	'pt-BR',//葡萄牙语（pt-BR）
+	'id',//印尼语（id）
+	'vi',//越南语（vi）
+] as const;
 export type SupportedLang = (typeof supported)[number];
 
 export const defaultLang: SupportedLang = 'en';
@@ -67,6 +77,9 @@ export const languagePack: Record<SupportedLang, Record<string, string>> = {
 		'add-to-browser': 'Add {name} to {browser}',
 		'add-wallet-extension': 'Add the wallet extension to your browser',
 		'add-extension': 'Add extension',
+		'connect-name': 'Connect {name}',
+		'open-wallet-app': 'Open and continue in the wallet app',
+		'open-app': 'Open App',
 	},
 	'zh-Hans': {
 		'last-used': '上次使用',
@@ -87,6 +100,9 @@ export const languagePack: Record<SupportedLang, Record<string, string>> = {
 		'add-to-browser': '将 {name} 添加到 {browser}',
 		'add-wallet-extension': '为浏览器添加钱包扩展',
 		'add-extension': '添加扩展',
+		'connect-name': '连接 {name}',
+		'open-wallet-app': '打开钱包 App 并继续操作',
+		'open-app': '打开 App',
 	},
 	'zh-Hant': {
 		'last-used': '上次使用',
@@ -107,6 +123,9 @@ export const languagePack: Record<SupportedLang, Record<string, string>> = {
 		'add-to-browser': '將 {name} 加到 {browser}',
 		'add-wallet-extension': '為瀏覽器加入錢包擴充功能',
 		'add-extension': '加入擴充功能',
+		'connect-name': '連接 {name}',
+		'open-wallet-app': '開啟錢包 App 並繼續操作',
+		'open-app': '開啟 App',
 	},
 	ja: {
 		'last-used': '前回使用',
@@ -127,6 +146,9 @@ export const languagePack: Record<SupportedLang, Record<string, string>> = {
 		'add-to-browser': '{name} を {browser} に追加',
 		'add-wallet-extension': 'ブラウザーにウォレット拡張機能を追加',
 		'add-extension': '拡張機能を追加',
+		'connect-name': '{name} に接続',
+		'open-wallet-app': 'ウォレットアプリを開いて続行',
+		'open-app': 'アプリを開く',
 	},
 	ko: {
 		'last-used': '최근 사용',
@@ -147,5 +169,107 @@ export const languagePack: Record<SupportedLang, Record<string, string>> = {
 		'add-to-browser': '{browser}에 {name} 추가',
 		'add-wallet-extension': '브라우저에 지갑 확장 프로그램 추가',
 		'add-extension': '확장 프로그램 추가',
+		'connect-name': '{name} 연결',
+		'open-wallet-app': '지갑 앱을 열고 계속 진행',
+		'open-app': '앱 열기',
 	},
+	th: {
+		'last-used': 'ใช้ล่าสุด',
+		'universal-qr': 'QR สากล',
+		installed: 'ติดตั้งแล้ว',
+		qr: 'QR',
+		plugin: 'ส่วนขยาย',
+		open: 'เปิด',
+		get: 'รับ',
+		retry: 'ลองอีกครั้ง',
+		refresh: 'รีเฟรช',
+		'qr-expired': 'QR หมดอายุแล้ว',
+		'assist-official': 'ต้องการเปิดหน้าต่างป๊อปอัปอย่างเป็นทางการของ {name} หรือไม่?',
+		'assist-get-wallet': 'ยังไม่มี {name} ใช่ไหม?',
+		'connect-coinbase': 'เชื่อมต่อ Coinbase Wallet',
+		'confirm-extension': 'โปรดยืนยันการเชื่อมต่อในส่วนขยาย',
+		'get-wallet': 'รับ {name}',
+		'add-to-browser': 'เพิ่ม {name} ไปยัง {browser}',
+		'add-wallet-extension': 'เพิ่มส่วนขยายกระเป๋าเงินไปยังเบราว์เซอร์ของคุณ',
+		'add-extension': 'เพิ่มส่วนขยาย',
+		'connect-name': 'เชื่อมต่อ {name}',
+		'open-wallet-app': 'เปิดแอปกระเป๋าเงินเพื่อดำเนินการต่อ',
+		'open-app': 'เปิดแอป',
+	},
+	'pt-BR': {
+		'last-used': 'Usado recentemente',
+		'universal-qr': 'QR Code universal',
+		installed: 'Instalado',
+		qr: 'QR Code',
+		plugin: 'Extensão',
+		open: 'Abrir',
+		get: 'Obter',
+		retry: 'Tentar novamente',
+		refresh: 'Atualizar',
+		'qr-expired': 'QR Code expirado',
+		'assist-official': 'Precisa abrir a janela oficial do {name}?',
+		'assist-get-wallet': 'Ainda não tem o {name}?',
+		'connect-coinbase': 'Conectar à Coinbase Wallet',
+		'confirm-extension': 'Confirme a conexão na extensão',
+		'get-wallet': 'Obter {name}',
+		'add-to-browser': 'Adicionar {name} ao {browser}',
+		'add-wallet-extension': 'Adicione a extensão da carteira ao seu navegador',
+		'add-extension': 'Adicionar extensão',
+		'connect-name': 'Conectar {name}',
+		'open-wallet-app': 'Abra o aplicativo da carteira para continuar',
+		'open-app': 'Abrir aplicativo',
+	},
+	id: {
+		'last-used': 'Terakhir digunakan',
+		'universal-qr': 'Kode QR universal',
+		installed: 'Terinstal',
+		qr: 'Kode QR',
+		plugin: 'Ekstensi',
+		open: 'Buka',
+		get: 'Dapatkan',
+		retry: 'Coba lagi',
+		refresh: 'Muat ulang',
+		'qr-expired': 'Kode QR telah kedaluwarsa',
+		'assist-official': 'Ingin membuka jendela pop-up resmi {name}?',
+		'assist-get-wallet': 'Belum punya {name}?',
+		'connect-coinbase': 'Hubungkan Coinbase Wallet',
+		'confirm-extension': 'Konfirmasi koneksi di ekstensi',
+		'get-wallet': 'Dapatkan {name}',
+		'add-to-browser': 'Tambahkan {name} ke {browser}',
+		'add-wallet-extension': 'Tambahkan ekstensi dompet ke browser Anda',
+		'add-extension': 'Tambahkan ekstensi',
+		'connect-name': 'Hubungkan {name}',
+		'open-wallet-app': 'Buka aplikasi dompet untuk melanjutkan',
+		'open-app': 'Buka aplikasi',
+	},
+	vi: {
+		'last-used': 'Đã dùng gần đây',
+		'universal-qr': 'Mã QR đa năng',
+		installed: 'Đã cài đặt',
+		qr: 'Mã QR',
+		plugin: 'Tiện ích mở rộng',
+		open: 'Mở',
+		get: 'Tải',
+		retry: 'Thử lại',
+		refresh: 'Làm mới',
+		'qr-expired': 'Mã QR đã hết hạn',
+		'assist-official': 'Bạn muốn mở cửa sổ bật lên chính thức của {name}?',
+		'assist-get-wallet': 'Bạn chưa có {name}?',
+		'connect-coinbase': 'Kết nối Coinbase Wallet',
+		'confirm-extension': 'Xác nhận kết nối trong tiện ích mở rộng',
+		'get-wallet': 'Tải {name}',
+		'add-to-browser': 'Thêm {name} vào {browser}',
+		'add-wallet-extension': 'Thêm tiện ích ví vào trình duyệt của bạn',
+		'add-extension': 'Thêm tiện ích mở rộng',
+		'connect-name': 'Kết nối {name}',
+		'open-wallet-app': 'Mở ứng dụng ví để tiếp tục',
+		'open-app': 'Mở ứng dụng',
+	}
 };
+
+
+
+
+
+
+

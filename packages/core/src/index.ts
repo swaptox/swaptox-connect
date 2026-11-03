@@ -114,6 +114,7 @@ export class WalletCore {
 	async wcProviderQr(obj: any) {
 		return await this.walletConnect.providerQr(obj);
 	}
+	
 
 	/*
 	|--------------------------------------------------------------------------
@@ -218,6 +219,7 @@ export class WalletCore {
 		this.emit('disconnect', disconnectError);
 	}
 
+	//页面刷新(加载)时，检查是否已经连接，如果自动弹起连接，也不自动切换网络，不打扰用户
 	async autoConnect() {
 		const lastConnect = lastUsedWallet();
 
@@ -295,6 +297,7 @@ export class WalletCore {
 		return standardData;
 	}
 
+	// 查验连接 （是否已连接账户，是否连接当前网络）
 	async checkConnect() {
 		const provider = this.provider;
 

@@ -1,3 +1,9 @@
+declare global {
+	interface Window {
+		$swaptoxConnect?: Record<string, unknown>;
+	}
+}
+
 import './swaptox-connect';
 import { createWallet } from '@swaptox/connect-core';
 
@@ -58,7 +64,7 @@ function createDefaultContainer(): { container: HTMLElement; created: boolean } 
 	}
 
 	container = doc.createElement('div');
-	container.id = 'swaptox-connect';
+	container.id = 'swaptox-connect-ui';
 	doc.body.appendChild(container);
 	return { container, created: true };
 }
@@ -72,6 +78,25 @@ function applyThemeVariables(container: HTMLElement, variables: ThemeVariables) 
 function mergeTheme(defaults: ThemeVariables, override?: ThemeVariables): ThemeVariables {
 	return Object.assign({}, defaults, override);
 }
+
+
+const _formatLanguagePack = function(customPack: any){
+	const newPack:any = {};
+	for (let key in customPack) {
+		const fallbackData = languagePack[customPack[key].fallback as keyof typeof languagePack];
+		newPack[key] = Object.assign({...fallbackData}, customPack[key].data);
+	}
+	return newPack;
+};
+const _formatThemePack = function(customPack: any){
+	const newPack:any = {};
+	for (let key in customPack) {
+		const fallbackData = themePack[customPack[key].fallback as keyof typeof themePack];
+		newPack[key] = Object.assign({...fallbackData}, customPack[key].data);
+	}
+	return newPack;
+};
+
 
 export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
 	const core = createWallet(config);
@@ -107,14 +132,14 @@ export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
 
 	function initThemePack() {
 		if (test.object(uidata.themePack)) {
-			allThemePack = deepMerge(themePack, uidata.themePack);
+			allThemePack = deepMerge(themePack, _formatThemePack(uidata.themePack));
 		}
 		activeTheme = uidata.theme && allThemePack[uidata.theme] ? uidata.theme : defaultTheme;
 	}
 
 	function initLanguage() {
 		if (test.object(uidata.languagePack)) {
-			allLanguagePack = deepMerge(languagePack, uidata.languagePack);
+			allLanguagePack = deepMerge(languagePack, _formatLanguagePack(uidata.languagePack));
 		}
 
 		const mergedLanguage = Object.assign(
@@ -203,24 +228,27 @@ export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
 
 	function setTheme(theme: string) {
 		if (!allThemePack[theme]) {
-			return false;
+			applyTheme(defaultTheme);
+			return defaultTheme;
 		}
 		applyTheme(theme);
-		return true;
+		return theme;
 	}
 
 	function setLang(lang: string) {
 		if (!allLanguagePack[lang]) {
-			return false;
+			sdkStore.setLanguage(Object.assign({}, allLanguagePack[defaultLang]));
+			return defaultLang;
 		}
 		sdkStore.setLanguage(Object.assign({}, allLanguagePack[defaultLang], allLanguagePack[lang]));
-		return true;
+		return lang;
 	}
 
 	initThemePack();
 	initLanguage();
-
-	return {
+	
+	window.$swaptoxConnect = {
+		core,
 		open,
 		autoConnect,
 		checkConnect,
@@ -235,4 +263,5 @@ export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
 		setTheme,
 		setLang,
 	};
+	return window.$swaptoxConnect;
 }

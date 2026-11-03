@@ -160,11 +160,11 @@ export class StxconnectButton extends LitElement {
 
 		.stxconnect-button[data-plain][data-variant="default"] {
 
-			background: transparent;
+			background: var(--stxconnect-button-plain-default-bg);
 
-			color: #444;
+			color: var(--stxconnect-button-plain-default-text);
 
-			border: 1px solid #d9d9d9;
+			border: 1px solid var(--stxconnect-button-plain-default-border-color);
 		}
 
 

@@ -109,7 +109,7 @@ export class StxconnectCoinbaseWallet extends StoreMixin(LitElement) {
 
 		return html`
 			<div class="header-title-body">
-				<span class="font-sans stxc-theme-font-color" style="font-size: 20px; line-height: 58px;">
+				<span class="font-sans stxc-theme-font-color" style="font-size: 18px; line-height: 58px;">
 					Coinbase Wallet
 				</span>
 			</div>
@@ -121,7 +121,7 @@ export class StxconnectCoinbaseWallet extends StoreMixin(LitElement) {
 						?iserror=${this.isError}
 					></stxconnect-loading-spinner>
 
-					<span class="font-sans stxc-theme-font-color" style="font-size: 20px; line-height: 50px;">
+					<span class="font-sans stxc-theme-font-color" style="font-size: 18px; line-height: 50px;">
 						${$t['connect-coinbase']}
 					</span>
 

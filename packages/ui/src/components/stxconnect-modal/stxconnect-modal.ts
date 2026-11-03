@@ -6,7 +6,7 @@ export class StxconnectModal extends LitElement {
 		open: { type: Boolean, reflect: true }
 	};
 	open = false;
-	
+	_isMonitorClose = false;
 	
 	
 
@@ -52,7 +52,7 @@ export class StxconnectModal extends LitElement {
 			to { transform: translateZ(0); opacity: 1 }
 		}
 		
-		@media (max-width: 700px) {
+		@media (max-width: 520px) {
 			dialog {
 				width: 100vw;
 				max-width: 100vw;
@@ -110,6 +110,13 @@ export class StxconnectModal extends LitElement {
 					this._dialog.showModal();
 				}
 				this._lockScroll();
+				if(!this._isMonitorClose){
+					this._isMonitorClose = true;
+					this._dialog.addEventListener('close', () => {
+						this._unlockScroll();
+						this.dispatchEvent(new CustomEvent('close'));
+					});
+				}
 			} else {
 				if (this._dialog.open) {
 					this._dialog.close();

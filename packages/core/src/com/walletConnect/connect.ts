@@ -74,6 +74,23 @@ type WalletConnectConnectionOptions = {
 const QR_REUSE_DELAY = 1000;
 const QR_TTL = 2.5 * 60 * 1000;
 
+
+export function getWalletConnectExpiry(uri: string): number | null {
+    try {
+        const query = uri.split('?')[1];
+        if (!query) return null;
+
+        const timestamp = new URLSearchParams(query).get('expiryTimestamp');
+        if (!timestamp || !/^\d+$/.test(timestamp)) return null;
+
+        const expiry = Number(timestamp);
+        return Number.isSafeInteger(expiry) ? expiry : null;
+    } catch {
+        return null;
+    }
+}
+
+
 function delay(ms : number) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -193,7 +210,7 @@ export class WalletConnectConnection {
 					}
 
 					await callMaybeAsync(options?.change, {
-						expirationTime: this.pendingUriAt+QR_TTL+QR_TTL,
+						expirationTime: getWalletConnectExpiry(uri),//this.pendingUriAt+QR_TTL+QR_TTL,
 						result: svg
 					});
 				},
@@ -202,6 +219,27 @@ export class WalletConnectConnection {
 			options
 		);
 	}
+
+
+	/* async providerUri(options : WalletConnectQrOptions) {
+		return this.provider(
+			{
+				display_uri: async (uri, meta) => {
+					if (meta?.reused) {
+						await delay(1);
+					}
+					await callMaybeAsync(options?.change, {
+						expirationTime: this.pendingUriAt+QR_TTL+QR_TTL,
+						result: uri
+					});
+				},
+				connect: options?.connect
+			},
+			options
+		);
+	} */
+
+
 
 	isProvider(provider : any) {
 		return this.options.wcCore.isProvider?.(provider) ?? false;
@@ -213,7 +251,7 @@ export class WalletConnectConnection {
 
 		this.options.wcCore.on('display_uri', (uri : string) => {
 			this.pendingUri = uri;
-			this.pendingUriAt = Date.now();
+			this.pendingUriAt = getWalletConnectExpiry(uri)??Date.now()+QR_TTL+QR_TTL;
 			void this.emitDisplayUri(uri, false);
 			this.options.emit('display_uri', uri);
 		});
@@ -276,7 +314,7 @@ export class WalletConnectConnection {
 
 	private canReusePendingQr() {
 		if (!this.hasPendingQr() || !this.pendingUri) return false;
-		return Date.now() - this.pendingUriAt < QR_TTL;
+		return Date.now() - (this.pendingUriAt*1000) < QR_TTL;
 	}
 
 	private hasPendingQr() {

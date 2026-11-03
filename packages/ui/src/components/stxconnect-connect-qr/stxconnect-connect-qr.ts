@@ -56,7 +56,7 @@ export class StxconnectConnectQr extends LitElement {
 				change: (event: any) => {
 					if (this._destroyed || requestId !== this._requestId) return;
 					this.svg = event.result;
-					this.expirationTime = event.expirationTime;
+					this.expirationTime = event.expirationTime*1000;
 					this.loading = false;
 				},
 				connect: (event: any) => {
@@ -181,32 +181,70 @@ export class StxconnectConnectQr extends LitElement {
 		.wc-qr-body image {
 			clip-path: inset(0 round 14px);
 		}
+		
+		
+		
+		.waibu-body{}
+		@media (max-width: 700px) {
+			.stxconnect-connect-qr-body {
+				transform: scale(0.76);
+				transform-origin: center center;
+				top: -40px;left: -40px;
+			}
+			.waibu-body {
+				width: 308px;
+				height: 308px;
+				max-width: 308px;
+				max-height: 308px;
+				overflow: hidden;
+			}
+		}
+		@media (max-width: 520px) {
+			.stxconnect-connect-qr-body {
+				transform: scale(0.62);
+				transform-origin: center center;
+				top: -70px;left: -70px;
+			}
+			.waibu-body {
+				width: 248px;
+				height: 248px;
+				max-width: 248px;
+				max-height: 248px;
+				overflow: hidden;
+			}
+		}
+		
+		
+		
+		
 	`;
 
 	render() {
 		return html`
-			<div class="stxconnect-connect-qr-body flex-center-body">
-				${this.loading
-					? html`
-							<div style="position: absolute; top: 14px; left: 14px;">
-								<div class="css-3ggn2y" style="height: 360px; width: 360px;">
-									<span data-v1="true"></span>
-									<span data-v2="true"></span>
-									<span data-v3="true"></span>
+			<div class="waibu-body">
+				<div class="stxconnect-connect-qr-body flex-center-body">
+					${this.loading
+						? html`
+								<div style="position: absolute; top: 14px; left: 14px;">
+									<div class="css-3ggn2y" style="height: 360px; width: 360px;">
+										<span data-v1="true"></span>
+										<span data-v2="true"></span>
+										<span data-v3="true"></span>
+									</div>
 								</div>
-							</div>
-						`
-					: html`<div class="wc-qr-body">${unsafeSVG(this.svg)}</div>`}
+							`
+						: html`<div class="wc-qr-body">${unsafeSVG(this.svg)}</div>`}
 
-				${this.loading
-					? null
-					: html`
-							<stxconnect-expired-mask 
-								.expiredTime=${this.expirationTime} 
-								@refresh=${this._wcProviderQr}
-							></stxconnect-expired-mask>
-						`}
-			</div>
+					${this.loading
+						? null
+						: html`
+								<stxconnect-expired-mask 
+									.expiredTime=${this.expirationTime}
+									@refresh=${this._wcProviderQr}
+								></stxconnect-expired-mask>
+							`}
+				</div>
+			<div>
 		`;
 	}
 }

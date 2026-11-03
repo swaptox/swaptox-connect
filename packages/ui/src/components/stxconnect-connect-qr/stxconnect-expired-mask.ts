@@ -77,6 +77,26 @@ export class StxconnectExpiredMask extends StoreMixin(LitElement) {
 		.stxc-theme-font-color {
 			color: var(--stxconnect-font-color, #111);
 		}
+		
+		
+		.fangdas{}
+		@media (max-width: 700px) {
+			.fangdas {
+				/*inset: 20px;*/
+				transform: scale(1.24);
+				transform-origin: center center;
+			}
+		}
+		@media (max-width: 520px) {
+			.fangdas {
+				/*inset: 36px;*/
+				transform: scale(1.6);
+				transform-origin: center center;
+			}
+		}
+		
+		
+		
 	`;
 
 	_refresh() {
@@ -95,7 +115,7 @@ export class StxconnectExpiredMask extends StoreMixin(LitElement) {
 		}
 
 		return html`
-			<div class="stxconnect-mask-absolute">
+			<div class="stxconnect-mask-absolute fangdas">
 				<div class="stxconnect-mask-absolute stxconnect-expired-mask"></div>
 				<div class="stxconnect-mask-absolute stxconnect-expired-flex" style="z-index: 5; row-gap: 10px;">
 					<svg viewBox="0 0 1098 1024" xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true">

@@ -1,6 +1,6 @@
 {
   "name": "@swaptox/connect-ui",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Lit UI package for SwaptoX Connect.",
   "type": "module",
   "main": "dist/connect-ui.js",

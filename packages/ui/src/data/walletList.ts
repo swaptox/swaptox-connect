@@ -97,7 +97,7 @@ export const walletList = [
 		type: 'wallet-connect',
 		name: 'Rabby',
 		subtitle: 'qr',
-		logo: 'https://cdn.swaptox.com/assets/wallet/rabby.png',
+		logo: 'https://cdn.swaptox.com/assets/wallet/rabby.svg',
 		border: 'var(--stxconnect-logo-border6)',
 	},
 	{
