@@ -1,8 +1,4 @@
-declare global {
-	interface Window {
-		$swaptoxConnect?: Record<string, unknown>;
-	}
-}
+
 
 import './swaptox-connect';
 import { createWallet } from '@swaptox/connect-core';
@@ -26,6 +22,50 @@ export interface ConnectUIOptions {
 	languagePack?: LanguagePack;
 	container?: HTMLElement | string;
 }
+
+
+
+
+
+
+// 定义 SDK 实例的通用接口
+export interface SwaptoxConnectInstance {
+	core: any; // 如果有 core 的具体类型可以替换 any
+	open: (...args: any[]) => void;
+	autoConnect: () => Promise<any>;
+	checkConnect: () => Promise<any>;
+	disconnect: () => Promise<any> | void;
+	close: () => void;
+	destroy: () => void;
+	updateConfig: (config: any) => void;
+	
+	// 事件监听：使用 string 保证不局限于 'connect' | 'disconnect'
+	on: (event: string, callback: EventCallback) => void;
+	off: (event: string, callback: EventCallback) => void;
+	
+	getProvider: () => any;
+	getState: () => any;
+	setTheme: (theme: string) => void;
+	setLang: (lang: string) => void;
+
+	// 允许未来扩展或挂载其他未知属性
+	[key: string]: any;
+}
+
+// createConnect 函数的返回值类型
+export type CreateConnectReturn = SwaptoxConnectInstance;
+
+
+
+declare global {
+	interface Window {
+		$swaptoxConnect?: SwaptoxConnectInstance;//Record<string, unknown>
+	}
+}
+
+
+
+
 
 function assertBrowser(): Document {
 	if (typeof document === 'undefined' || typeof customElements === 'undefined') {
@@ -98,7 +138,7 @@ const _formatThemePack = function(customPack: any){
 };
 
 
-export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
+export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}): SwaptoxConnectInstance {
 	const core = createWallet(config);
 	let stxEl: SwaptoXConnect | null = null;
 	let container: HTMLElement | null = null;
@@ -203,6 +243,7 @@ export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
 			container.remove();
 		}
 		container = null;
+		window.dispatchEvent(new CustomEvent('swaptox-connect-destroy'));
 	}
 
 	function updateConfig(next: any) {
@@ -263,5 +304,6 @@ export function createConnect(config: any = {}, uidata: ConnectUIOptions = {}) {
 		setTheme,
 		setLang,
 	};
+	window.dispatchEvent(new CustomEvent('swaptox-connect-ready', {detail: window.$swaptoxConnect}));
 	return window.$swaptoxConnect;
 }

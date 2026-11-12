@@ -320,6 +320,8 @@ if (typeof customElements !== 'undefined' && !customElements.get('swaptox-connec
 
 /*
 
+npm run build
+
 请在 PowerShell 里运行：
 npm login --auth-type=web --registry=https://registry.npmjs.org/
 npm 会显示登录链接；按提示回车打开浏览器，完成授权后回到终端。你已经在浏览器登录的话，通常可以直接继续授权；如果没自动打开，就复制终端给出的链接到浏览器。npm 官方文档说明了这个 CLI 浏览器登录流程。npm 登录文档
@@ -334,6 +336,24 @@ pnpm --filter "@swaptox/connect-ui" publish --access public --no-git-checks --dr
 确认预览内容无误后，按 core → UI 的顺序发布：
 pnpm --filter "@swaptox/connect-core" publish --access public --no-git-checks
 pnpm --filter "@swaptox/connect-ui" publish --access public --no-git-checks
+
+
+
+
+
+上传github
+
+git status --short
+git add -A
+git diff --cached
+git commit -m "Update connect SDK"
+git push origin main
+
+
+git diff --cached 是查看已暂存改动的命令，不会提交或上传。它可能打开分页查看器，看起来像卡住了：
+- 按 q 退出，回到 PowerShell 提示符
+
+
 
 */
 

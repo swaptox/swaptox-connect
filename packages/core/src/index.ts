@@ -278,8 +278,8 @@ export class WalletCore {
 		try {
 			const walletChainId = await getChainId(provider);
 			if (walletChainId !== this.currentChain.id) {
-				this._setConnected(false);
-				return null;
+				//this._setConnected(false);
+				//return null;
 			}
 		} catch (err) {
 			this._setConnected(false);
@@ -298,7 +298,7 @@ export class WalletCore {
 	}
 
 	// 查验连接 （是否已连接账户，是否连接当前网络）
-	async checkConnect() {
+	async checkConnect(chain='') {
 		const provider = this.provider;
 
 		try {
@@ -313,8 +313,16 @@ export class WalletCore {
 			if (!accounts.length) {
 				throw new Error('Wallet is not authorized');
 			}
-
-			await this._detectConnect(provider);
+			
+			if(chain){
+				const requestChain = this._getValidChain(chain, 'Current chain is invalid');
+				const walletChainId = await getChainId(provider);
+				if (walletChainId !== requestChain.id) {
+					await this._switchChain(provider, requestChain);
+				}
+			}else{
+				await this._detectConnect(provider);
+			}
 
 			return await this._setConnectedProvider({
 				provider,
@@ -448,23 +456,28 @@ export class WalletCore {
 	private async _detectConnect(provider: WalletProvider) {
 		const walletChainId = await getChainId(provider);
 		if (walletChainId === this.currentChain.id) return;
-
+		
+		await this._switchChain(provider, this.currentChain);
+	}
+	
+	private async _switchChain(provider: WalletProvider, setChain: Chain) {
 		try {
-			await switchChain(provider, this.currentChain.id);
+			await switchChain(provider, setChain.id);
 		} catch (err: any) {
 			if (err?.code !== 4902) {
 				throw err;
 			}
-
-			await addChain(provider, this.currentChain);
-			await switchChain(provider, this.currentChain.id);
+	
+			await addChain(provider, setChain);
+			await switchChain(provider, setChain.id);
 		}
-
+	
 		const currentChainId = await getChainId(provider);
-		if (currentChainId !== this.currentChain.id) {
-			throw new Error(`Failed to switch to chain ${this.currentChain.id}`);
+		if (currentChainId !== setChain.id) {
+			throw new Error(`Failed to switch to chain ${setChain.id}`);
 		}
 	}
+	
 
 	private _bindActiveProviderEvents(provider: WalletProvider) {
 		if (!provider?.on) return;

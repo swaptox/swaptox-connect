@@ -1,6 +1,6 @@
 {
 	"name": "@swaptox/connect-core",
-	"version": "1.0.2",
+	"version": "1.0.5",
 	"type": "module",
 	"description": "Core wallet connection logic for SwaptoX Connect.",
 	"main": "dist/index.js",
