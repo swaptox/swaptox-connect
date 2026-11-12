@@ -16,22 +16,10 @@ SwaptoX Connect is a wallet connection SDK for EVM applications. It contains:
 ![SwaptoX Connect QR view](packages/playground/demo/2.png)
 ![SwaptoX Connect dark theme](packages/playground/demo/3.png)
 
-If local images are unavailable, use:
-
-- https://cdn.swaptox.com/assets/swaptox-connect/1.png
-- https://cdn.swaptox.com/assets/swaptox-connect/2.png
-- https://cdn.swaptox.com/assets/swaptox-connect/3.png
-
 ## Installation
 
 ```bash
-pnpm add @swaptox/connect-ui viem @walletconnect/ethereum-provider @coinbase/wallet-sdk qr-code-styling
-```
-
-Core-only usage:
-
-```bash
-pnpm add @swaptox/connect-core viem @walletconnect/ethereum-provider @coinbase/wallet-sdk qr-code-styling
+pnpm add @swaptox/connect-ui @swaptox/connect-core viem @walletconnect/ethereum-provider @coinbase/wallet-sdk qr-code-styling
 ```
 
 ## UI Usage
@@ -95,46 +83,6 @@ connect.setLang('zh-Hans');
 connect.on('connect', callback);
 connect.off('connect', callback);
 connect.destroy();
-```
-
-## Core Usage
-
-Use core when you want to build your own UI.
-
-```ts
-import { createWallet } from '@swaptox/connect-core';
-
-const wallet = createWallet({
-  projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
-  chains: ['base', 'rootstock'],
-  currentChain: 'base',
-  metadata: {
-    name: 'Your App',
-    description: 'Your App Description',
-    url: 'https://example.com',
-    logo: 'https://example.com/logo.png',
-  },
-});
-
-await wallet.autoConnect();
-await wallet.checkConnect();
-```
-
-Custom WalletConnect QR:
-
-```ts
-await wallet.wcProviderQr({
-  id: 'walletconnect',
-  type: 'walletconnect',
-  name: 'WalletConnect',
-  change: ({ result, expirationTime }) => {
-    document.querySelector('#qr')!.innerHTML = result;
-    console.log('expires at', expirationTime);
-  },
-  connect: data => {
-    console.log('connected', data);
-  },
-});
 ```
 
 ## Native Browser Usage
@@ -201,13 +149,7 @@ SwaptoX Connect 是一个适用于 EVM 应用的钱包连接 SDK，项目包含�
 ### 安装
 
 ```bash
-pnpm add @swaptox/connect-ui viem @walletconnect/ethereum-provider @coinbase/wallet-sdk qr-code-styling
-```
-
-只使用逻辑层：
-
-```bash
-pnpm add @swaptox/connect-core viem @walletconnect/ethereum-provider @coinbase/wallet-sdk qr-code-styling
+pnpm add @swaptox/connect-ui @swaptox/connect-core viem @walletconnect/ethereum-provider @coinbase/wallet-sdk qr-code-styling
 ```
 
 ### UI 使用
